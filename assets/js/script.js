@@ -1,5 +1,50 @@
-var apiKey = "6abd422032a07f4d3ac394904d57e5fb"
-var city = "milwaukee"
+var key = "6abd422032a07f4d3ac394904d57e5fb"
+var city = "madison"
+
+var date = moment().format('llll');
+var cityHistory = [];
+var contHistEl = $('.cityHistory');
+var cardTodayBody = $('.cardBodyToday');
+
+$('#search').on('click', function (event){
+    event.preventDefault();
+    city = $(this).parent('.btnPar').siblings('.textVal').val().trim();
+    if (city === "") {
+        return;
+    };
+    cityHistory.push(city);
+
+    localStorage.setItem('city', JSON.stringify(cityHistory));
+    fiveForecastEl.empty();
+    getHistory();
+    getWeatherToday();
+});
+
+function getHistory() {
+    contHistEl.empty();
+
+    for (var i = 0; i < cityHistory.length; i++) {
+        var rowEl = $('<row>');
+        var btnEl = $('<button>').text('${cityHistory[i]}');
+
+        rowEl.addClass('row hisBtnRow');
+        btnEl.addClass('btn btn-outline-secondary histBtn');
+        btnEl.attr('type', 'button');
+
+        contHistEl.prepend(rowEl);
+        rowEl.append(btnEl);
+    } if (!city) {
+        return;
+    };
+
+    $('.histBtn').on('click', function (event) {
+        event.preventDefault();
+        city = $(this).text();
+        fiveForecastEl.empty();
+        getWeatherToday();
+    });
+};
+
 
 function getLocationData(city) {
     fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey)
@@ -22,6 +67,6 @@ function getLocationData(city) {
 }
 }
 
-getCurrentWeather('milwaukee');
+getCurrentWeather('madison');
 
 
