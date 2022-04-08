@@ -5,6 +5,7 @@ var date = moment().format('llll');
 var cityHistory = [];
 var contHistEl = $('.cityHistory');
 var cardTodayBody = $('.cardBodyToday');
+var fiveForecastEl = $('.fiveForecast';)
 
 $('#search').on('click', function (event){
     event.preventDefault();
@@ -45,27 +46,71 @@ function getHistory() {
     });
 };
 
+ function getCurrentWeather() {
+    var getUrlCurrent = ("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon +"&appid=" + key + "&units=imperial");
+    var getUrlUvi = ("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly,daily,minutely&appid=" + key);
+    var lon = response.coord.lon;
+    var lat = response.coord.lat;
+    
+    $(cardTodayBody).empty();
 
-function getLocationData(city) {
-    fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey)
-    .then(function(response) {
-        return response.json()
-    })
-    .then(function(locationData) {
-        console.log(locationData)
-        getCurrentWeather(locationData[0].lat, locationData[0].lon)
-})
+    $.ajax({
+        url: getUrlCurrent,
+        method: 'GET',
+    }).then(function(response) {
+        $('.cardTodayCityName').text(response.name);
+        $('.cardTodayDate').text(date);
+        $('.icons').attr('src', `https://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`);
+        
+        var pEl = $('<p>').text(`Temperature: ${response.main} °F`);
+        var pElHumid = $('<p>').text(`Humidity: ${response.main.humidity} %`);
+        var pElWind = $('<p>').text(`Wind Speed: ${response.wind.speed} MPH`);
+        
+        cardTodayBody.append(pEl);
+        cardTodayBody.append(pElHumid);
+        cardTodayBody.append(pElWind);
 
- function getCurrentWeather(lat, lon) {
-    fetch("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon +"&appid=" + apiKey + "&units=imperial")
-    .then(function(response) {
-        return response.json() 
+        $.ajax({
+            url: getUrlUvi,
+            method: "GET",
+        }).then(function(response) {
+            var pElUvi = $('<p>').text("UV Index: ");
+            var uviSpan = $('<span>').text(response.current.uvi);
+            var uvi = response.current.uvi;
+
+            if (uvi >= 0 && uvi <= 2) {
+                uviSpan.attr("class", "green");
+            }else if (uvi > 2 && uvi <= 6) {
+                uviSpan.attr("class", "yellow");
+            }else if (uvi > 6 && uvi <= 10) {
+                uviSpan.attr("class", "red");
+            };
+
+            pElUvi.append(uviSpan);
+            cardTodayBody.append(pElUvi);
+        });
+    });
+    getFiveDayForecast();
+};
+
+function getFiveDayForecast() {
+    var getUrlFiveDay = ("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + key);
+
+    $.ajax({
+        url: getUrlFiveDay,
+        method: "GET",
+    }).then(function(response) {
+        var fiveDayArray = response.list;
+        var myWeather = [];
+        $.each(fiveDayArray, function(index, value) {
+            testObj = {
+                date: value.dt_txt.split(" ")[0],
+                time:
+            }
         })
-        .then(function(weatherData) {
-            console.log(weatherData)
     })
 }
-}
+
 
 getCurrentWeather('madison');
 
