@@ -1,7 +1,7 @@
 // global variables
 var key = "6abd422032a07f4d3ac394904d57e5fb"
 var city = "Madison"
-var date = moment().format('llll');
+var date = moment().format('LL');
 var cityHistory = [];
 var historyContainer = $('.cityHistory');
 var todayBody = $('.todayBody');
@@ -61,6 +61,7 @@ function getHistory() {
         url: getUrlCurrent,
         method: 'GET',
     }).then(function(response) {
+        // console.log(response);
         $('.todayCityName').text(response.name);
         $('.todayDate').text(date);
         // collects icons
