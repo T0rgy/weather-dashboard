@@ -95,7 +95,7 @@ function getHistory() {
                 uviSpan.attr("class", "green");
             }else if (uvi > 3 && uvi <= 6) {
                 uviSpan.attr("class", "yellow");
-            }else if (uvi > 6 && uvi <= 10) {
+            }else if (uvi > 6 && uvi <= 100) {
                 uviSpan.attr("class", "red");
             }
         });
