@@ -14,9 +14,10 @@
     <header>
         <h1>Weather Dashboard</h1>
     </header>
-
+    <!-- container for all -->
     <main class="container-fluid">
         <div class="row">
+            <!-- side search bar -->
             <aside class="col-12 col-md-3 col-xl-3">
                 <h2>Search for a City:</h2>
                 <div class="input-group mb-3">  
@@ -25,27 +26,29 @@
                         <button class="btn btn-primary search" type="button"><i class="fas fa-search"></i></button>
                     </div>
                 </div> 
-
+                <!-- container for previously searched cities -->
                 <div class="container cityHistory"></div>
             </aside>
 
+            <!-- card displays for weather conditions -->
             <section class="col-12 col-md-9 col-xl-9">
-                <div class="row today">
+                <!-- today city card -->
+                <div class="row">
                     <div class="card mb-3" style="max-width: 400px">
                         <h2 class="card-header todayCityName"></h2>
                         <h3 class="card-header todayDate"></h3>
                         <img class="icons"/>
+                        <!-- displays data variables -->
                         <div class="card-body todayBody"></div>
                     </div>
                 </div>
 
+                <!-- container for 5 day forcast cards -->
                 <div class="row fiveDayForecast"></div>
 
             </section>
         </div>
     </main>
-
-
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>

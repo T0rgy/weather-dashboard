@@ -1,3 +1,4 @@
+// global variables
 var key = "6abd422032a07f4d3ac394904d57e5fb"
 var city = "Madison"
 var date = moment().format('llll');
@@ -6,6 +7,7 @@ var historyContainer = $('.cityHistory');
 var todayBody = $('.todayBody');
 var fiveDayForecast = $('.fiveDayForecast');
 
+// function when city search button is clicked
 $('.search').click(function (event){
     event.preventDefault();
     city = $(this).parent('.btnPar').siblings('.textVal').val().trim();
@@ -14,12 +16,14 @@ $('.search').click(function (event){
     };
     cityHistory.push(city);
 
+    // saves to local storage
     localStorage.setItem('city', JSON.stringify(cityHistory));
     fiveDayForecast.empty();
     getHistory();
     getCurrentWeather();
 });
 
+// function to display previously searched cities
 function getHistory() {
     historyContainer.empty();
 
@@ -37,7 +41,8 @@ function getHistory() {
         return;
     };
 
-    $('.histBtn').on('click', function (event) {
+    // displays city info once histBtn is clicked
+    $('.histBtn').click(function (event) {
         event.preventDefault();
         city = $(this).text();
         fiveDayForecast.empty();
@@ -45,19 +50,23 @@ function getHistory() {
     });
 };
 
+// collects current weather and displays in today card
  function getCurrentWeather() {
     var getUrlCurrent = (`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${key}`);
     
     $(todayBody).empty();
 
+    // fetches weather information from api
     $.ajax({
         url: getUrlCurrent,
         method: 'GET',
     }).then(function(response) {
         $('.todayCityName').text(response.name);
         $('.todayDate').text(date);
-        $('.icons').attr('src', `https://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`);
+        // collects icons
+        $('.icons').attr('src', `https://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`); 
 
+        // data variables
         var lon = response.coord.lon;
         var lat = response.coord.lat;
         var tempEl = $('<p>').text(`Temperature: ${response.main.temp}°F`);
@@ -68,7 +77,7 @@ function getHistory() {
         todayBody.append(humidityEl);
         todayBody.append(windEl);
 
-        
+        // fetches UV index from api
         var getUrlUvi = (`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,daily,minutely&appid=${key}`);
 
         $.ajax({
@@ -81,6 +90,7 @@ function getHistory() {
             uviEl.append(uviSpan);
             todayBody.append(uviEl);
 
+            // adds background color to UV Index
             if (uvi >= 0 && uvi <= 3) {
                 uviSpan.attr("class", "green");
             }else if (uvi > 3 && uvi <= 6) {
@@ -90,16 +100,20 @@ function getHistory() {
             }
         });
     });
+
+    // displays 5 day forcast after data is collected
     getFiveDayForecast();
 };
 
+// function to display 5 day forcast
 function getFiveDayForecast() {
     var getUrlFiveDay = (`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${key}`);
-
+    
     $.ajax({
         url: getUrlFiveDay,
         method: "GET",
     }).then(function(response) {
+        // five day forcast array start
         var fiveDayArray = response.list;
         var weatherArray = [];
         $.each(fiveDayArray, function(i, value) {
@@ -116,6 +130,7 @@ function getFiveDayForecast() {
                 weatherArray.push(testObj);
             };
         })
+        // displays five day forcast cards
         for (var i = 0; i < weatherArray.length; i++) {
             var divCard = $('<div>');
             divCard.attr('class', 'card text-white bg-primary mb-3');
@@ -125,6 +140,7 @@ function getFiveDayForecast() {
             var divHeader = $('<div>');
             divHeader.attr('class', 'card-header');
 
+            // displays date
             var date5Day = moment(`${weatherArray[i].date}`).format('MM-DD-YYYY');
             divHeader.text(date5Day);
             divCard.append(divHeader);
@@ -133,6 +149,7 @@ function getFiveDayForecast() {
             divBody.attr('class', 'card-body');
             divCard.append(divBody);
 
+            // displays icons
             var divIcon = $('<img>');
             divIcon.attr('class', 'icon');
             divIcon.attr('src', `https://openweathermap.org/img/wn/${weatherArray[i].icon}@2x.png`);
@@ -148,6 +165,7 @@ function getFiveDayForecast() {
     });
 };
 
+// displays Madison on load and calls getHistory and getCurrentWeather functions
 function startCity() {
     var cityHistoryStore = JSON.parse(localStorage.getItem('city'));
     if (cityHistoryStore !== null) {
