@@ -1,0 +1,36 @@
+h1 {
+    background-image: linear-gradient(45deg, #FA8BFF, 0%, #2BD2FF 52%, #2BFF88 90%);
+    background-size: 1px 100px;
+    background-position: 0 -10px;
+	text-align: center;
+}
+.card {
+	margin: 10px;
+    background-color: #2BFF88;
+    font-weight: bolder;
+}
+.green{
+  background-color: green;
+  border-radius: 15px;
+  margin: 5px;
+  padding: 5px;
+}
+.yellow{
+  background-color: yellow;
+  border-radius: 15px;
+  margin: 5px;
+  padding: 5px;
+}
+.red{
+  background-color: red;
+  border-radius: 15px;
+  margin: 5px;
+  padding: 5px;
+}
+.icons {
+	height: 70px;
+	width: 70px;
+}
+.cardTodayDate {
+	font-size: 20px;
+}

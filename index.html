@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
-    <link rel="stylesheet" src="./assets/css/style.css"/>
+    <link rel="stylesheet" href="./assets/css/style.css"/>
     <title>Weather Dashboard</title>
 </head>
 <body>
@@ -15,31 +15,31 @@
         <h1>Weather Dashboard</h1>
     </header>
 
-    <main class="container-fluid mainCon">
+    <main class="container-fluid">
         <div class="row">
-            <aside class="col-12 col-md-3 col-xl-3 colOne">
+            <aside class="col-12 col-md-3 col-xl-3">
                 <h2>Search for a City:</h2>
                 <div class="input-group mb-3">  
                     <input type="text" class="form-control textVal" placeholder="Madison..."/>
                     <div class="input-group-append btnPar">
-                        <button class="btn btn-primary search" type="button" id="searchButton"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-primary search" type="button"><i class="fas fa-search"></i></button>
                     </div>
                 </div> 
 
                 <div class="container cityHistory"></div>
             </aside>
 
-            <section class="col-12 col-md-9 col-xl-9 colTwo">
+            <section class="col-12 col-md-9 col-xl-9">
                 <div class="row today">
-                    <div class="card bg-light mb-3" style="max-width: 400px">
-                        <h2 class="card-header cardTodayCityName"></h2>
-                        <h3 class="card-header cardTodayDate"></h3>
+                    <div class="card mb-3" style="max-width: 400px">
+                        <h2 class="card-header todayCityName"></h2>
+                        <h3 class="card-header todayDate"></h3>
                         <img class="icons"/>
-                        <div class="card-body cardBodyToday"></div>
+                        <div class="card-body todayBody"></div>
                     </div>
                 </div>
 
-                <div class="row fiveForcast"></div>
+                <div class="row fiveDayForecast"></div>
 
             </section>
         </div>
@@ -48,7 +48,6 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
